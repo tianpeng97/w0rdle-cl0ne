@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useContext } from "react";
-import { AppContext } from "../App";
-import Key from "./Key";
+import React, { useCallback, useEffect } from 'react';
+import { useAppContext } from '../Context';
+import Key from './Key';
 
 function Keyboard() {
-  const { onEnter, onDelete, onSelectLetter } = useContext(AppContext);
-  const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
-  const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
-  const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
+  const { onEnter, onDelete, onSelectLetter } = useAppContext;
+  const keys1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
+  const keys2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
+  const keys3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
 
   const handleKeyboard = useCallback((event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       onEnter();
-    } else if (event.key === "Backspace") {
+    } else if (event.key === 'Backspace') {
       onDelete();
     } else {
       keys3.forEach((key) => {
@@ -33,10 +33,10 @@ function Keyboard() {
   });
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyboard);
+    document.addEventListener('keydown', handleKeyboard);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyboard);
+      document.removeEventListener('keydown', handleKeyboard);
     };
   }, [handleKeyboard]);
 
@@ -53,11 +53,11 @@ function Keyboard() {
         })}
       </div>
       <div className="line3">
-        <Key keyVal={"ENTER"} bigKey />
+        <Key keyVal={'ENTER'} bigKey />
         {keys3.map((key) => {
           return <Key keyVal={key} />;
         })}
-        <Key keyVal={"DELETE"} bigKey />
+        <Key keyVal={'DELETE'} bigKey />
       </div>
     </div>
   );

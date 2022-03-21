@@ -1,17 +1,16 @@
-import "./App.css";
-import Board from "./components/Board";
-import Keyboard from "./components/Keyboard";
-import { boardDefault } from "./components/Words";
-import { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import { boardDefault } from './components/Words';
 
-export const AppContext = createContext();
+const AppContext = createContext();
 
-function App() {
+export function AppContextProvider({ children }) {
   const [board, setBoard] = useState(boardDefault);
   const [currentAttempt, setCurrentAttempt] = useState({
     attempt: 0,
     letterPos: 0,
   });
+  const correctWord = 'RIGHT';
 
   const onSelectLetter = (keyVal) => {
     if (currentAttempt.letterPos > 4) return;
@@ -23,16 +22,18 @@ function App() {
       letterPos: currentAttempt.letterPos + 1,
     });
   };
+
   const onDelete = () => {
     if (currentAttempt.letterPos === 0) return;
     const newBoard = [...board];
-    newBoard[currentAttempt.attempt][currentAttempt.letterPos - 1] = "";
+    newBoard[currentAttempt.attempt][currentAttempt.letterPos - 1] = '';
     setBoard(newBoard);
     setCurrentAttempt({
       ...currentAttempt,
       letterPos: currentAttempt.letterPos - 1,
     });
   };
+
   const onEnter = () => {
     if (currentAttempt.letterPos !== 5) return;
     setCurrentAttempt({
@@ -41,29 +42,24 @@ function App() {
     });
   };
 
-  return (
-    <div className="App">
-      <nav>
-        <h1>Wordle</h1>
-      </nav>
-      <AppContext.Provider
-        value={{
-          board,
-          setBoard,
-          currentAttempt,
-          setCurrentAttempt,
-          onSelectLetter,
-          onDelete,
-          onEnter,
-        }}
-      >
-        <div className="game">
-          <Board />
-          <Keyboard />
-        </div>
-      </AppContext.Provider>
-    </div>
-  );
-}
+  const AppContextStore = {
+    board,
+    setBoard,
+    currentAttempt,
+    setCurrentAttempt,
+    onSelectLetter,
+    onDelete,
+    onEnter,
+    correctWord,
+  };
 
-export default App;
+  return <AppContext value={AppContextStore}>{children}</AppContext>;
+}
+AppContextProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
+
+export const useAppContext = () => useContext(AppContext);
