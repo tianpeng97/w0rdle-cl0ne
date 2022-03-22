@@ -66,7 +66,7 @@ function App() {
       alert('Not a word.');
     }
 
-    if (currentWord === correctWord) {
+    if (currentWord.toLowerCase() === correctWord) {
       setGameOver({ gameOver: true, guessedWord: true });
       return;
     }
