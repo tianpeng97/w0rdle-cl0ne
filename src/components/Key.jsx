@@ -1,8 +1,8 @@
-import React from 'react';
-import { useAppContext } from '../Context';
+import React, { useContext } from 'react';
+import { AppContext } from '../App';
 
-function Key({ keyVal, bigKey }) {
-  const { onSelectLetter, onDelete, onEnter } = useAppContext;
+function Key({ keyVal, bigKey, state }) {
+  const { onSelectLetter, onDelete, onEnter } = useContext(AppContext);
   const selectLetter = () => {
     if (keyVal === 'ENTER') {
       onEnter();
@@ -14,7 +14,7 @@ function Key({ keyVal, bigKey }) {
   };
 
   return (
-    <div className="key" id={bigKey && 'big'} onClick={selectLetter}>
+    <div className="key" id={bigKey ? 'big' : state} onClick={selectLetter}>
       {keyVal}
     </div>
   );

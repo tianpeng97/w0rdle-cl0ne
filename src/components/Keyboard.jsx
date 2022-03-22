@@ -1,9 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
-import { useAppContext } from '../Context';
+import React, { useCallback, useEffect, useContext } from 'react';
+import { AppContext } from '../App';
 import Key from './Key';
 
 function Keyboard() {
-  const { onEnter, onDelete, onSelectLetter } = useAppContext;
+  const {
+    onEnter,
+    onDelete,
+    onSelectLetter,
+    disabledLetters,
+    correctLetters,
+    almostLetters,
+  } = useContext(AppContext);
   const keys1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
   const keys2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
   const keys3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
@@ -40,24 +47,36 @@ function Keyboard() {
     };
   }, [handleKeyboard]);
 
+  const stateCheck = (key) => {
+    if (correctLetters.includes(key)) {
+      return 'correct';
+    } else if (almostLetters.includes(key)) {
+      return 'almost';
+    } else if (disabledLetters.includes(key)) {
+      return 'disabled';
+    } else {
+      return undefined;
+    }
+  };
+
   return (
     <div className="keyboard" onKeyDown={handleKeyboard}>
       <div className="line1">
-        {keys1.map((key) => {
-          return <Key keyVal={key} />;
-        })}
+        {keys1.map((key) => (
+          <Key keyVal={key} state={stateCheck(key)} />
+        ))}
       </div>
       <div className="line2">
-        {keys2.map((key) => {
-          return <Key keyVal={key} />;
-        })}
+        {keys2.map((key) => (
+          <Key keyVal={key} state={stateCheck(key)} />
+        ))}
       </div>
       <div className="line3">
-        <Key keyVal={'ENTER'} bigKey />
-        {keys3.map((key) => {
-          return <Key keyVal={key} />;
-        })}
-        <Key keyVal={'DELETE'} bigKey />
+        <Key keyVal="ENTER" bigKey />
+        {keys3.map((key) => (
+          <Key keyVal={key} state={stateCheck(key)} />
+        ))}
+        <Key keyVal="DELETE" bigKey />
       </div>
     </div>
   );
