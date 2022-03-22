@@ -17,7 +17,7 @@ function Letter({ letterPos, attemptVal }) {
   const almost = !correct && correctWord.toUpperCase().includes(letter);
 
   let letterState;
-  if (currentAttempt.attempt > attemptVal) {
+  if (currentAttempt.attempt > attemptVal && letter !== '') {
     if (correct) {
       letterState = 'correct';
     } else if (almost) {
@@ -28,12 +28,14 @@ function Letter({ letterPos, attemptVal }) {
   }
 
   useEffect(() => {
-    if (correct) {
-      setCorrectLetters((prev) => new Set(prev).add(letter));
-    } else if (almost) {
-      setAlmostLetters((prev) => new Set(prev).add(letter));
-    } else {
-      setDisabledLetters((prev) => new Set(prev).add(letter));
+    if (letter !== '') {
+      if (correct) {
+        setCorrectLetters((prev) => new Set(prev).add(letter));
+      } else if (almost) {
+        setAlmostLetters((prev) => new Set(prev).add(letter));
+      } else {
+        setDisabledLetters((prev) => new Set(prev).add(letter));
+      }
     }
   }, [currentAttempt.attempt]);
 
