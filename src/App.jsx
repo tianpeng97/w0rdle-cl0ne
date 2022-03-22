@@ -1,9 +1,9 @@
 import './App.css';
 import React, { createContext, useState, useEffect } from 'react';
-import Board from './components/Board';
+import Board, { boardDefault } from './components/Board';
 import Keyboard from './components/Keyboard';
 import GameOver from './components/GameOver';
-import { boardDefault, generateWord } from './components/Words';
+import { generateWord } from './components/Words';
 
 export const AppContext = createContext();
 
@@ -14,9 +14,9 @@ function App() {
     letterPos: 0,
   });
   const [wordsSet, setWordsSet] = useState(new Set());
-  const [disabledLetters, setDisabledLetters] = useState([]);
-  const [almostLetters, setAlmostLetters] = useState([]);
-  const [correctLetters, setCorrectLetters] = useState([]);
+  const [disabledLetters, setDisabledLetters] = useState(new Set());
+  const [almostLetters, setAlmostLetters] = useState(new Set());
+  const [correctLetters, setCorrectLetters] = useState(new Set());
   const [correctWord, setCorrectWord] = useState('');
   const [gameOver, setGameOver] = useState({
     gameOver: false,
@@ -73,7 +73,6 @@ function App() {
 
     if (currentAttempt.attempt === 5) {
       setGameOver({ gameOver: true, guessedWord: false });
-      return;
     }
   };
 
@@ -83,6 +82,7 @@ function App() {
         <h1>Wordle</h1>
       </nav>
       <div className="game">
+        {/* eslint-disable */}
         <AppContext.Provider
           value={{
             board,

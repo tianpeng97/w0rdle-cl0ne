@@ -48,11 +48,11 @@ function Keyboard() {
   }, [handleKeyboard]);
 
   const stateCheck = (key) => {
-    if (correctLetters.includes(key)) {
+    if (correctLetters.has(key)) {
       return 'correct';
-    } else if (almostLetters.includes(key)) {
+    } else if (almostLetters.has(key)) {
       return 'almost';
-    } else if (disabledLetters.includes(key)) {
+    } else if (disabledLetters.has(key)) {
       return 'disabled';
     } else {
       return undefined;

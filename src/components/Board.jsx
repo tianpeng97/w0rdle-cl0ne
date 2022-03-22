@@ -1,6 +1,10 @@
 import React from 'react';
 import Letter from './Letter';
 
+export const boardDefault = Array(6)
+  .fill()
+  .map(() => Array(5).fill(''));
+
 function Board() {
   return (
     <div className="board">
