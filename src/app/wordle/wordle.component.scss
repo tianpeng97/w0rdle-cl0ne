@@ -1,0 +1,111 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 30px;
+    border-bottom: 1px solid #ddd;
+    margin: 14px;
+  }
+
+  .main {
+    flex-grow: 1;
+    .try-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+
+      .letter-container {
+        border: 2px solid #ddd;
+        box-sizing: border-box;
+        margin: 0 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        text-transform: uppercase;
+
+        &.has-text {
+          border-color: black;
+          animation-name: letter-pop;
+          animation-duration: 120ms;
+        }
+
+        &.partial-match {
+          border-color: yellow;
+        }
+
+        &.wrong {
+          border-color: red;
+        }
+
+        &.full-match {
+          border-color: green;
+        }
+      }
+    }
+  }
+
+  .keyboard-container {
+    display: flex;
+    flex-direction: column;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .key {
+        border: 1px solid grey;
+        height: 60px;
+        min-width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 15px;
+        font-weight: bold;
+        user-select: none;
+
+        &.match {
+          background-color: green;
+        }
+
+        &.partial {
+          background-color: yellow;
+        }
+
+        &.wrong {
+          background-color: red;
+        }
+      }
+    }
+  }
+}
+
+// animations
+@keyframes letter-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

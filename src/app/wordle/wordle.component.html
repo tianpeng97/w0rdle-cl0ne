@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="title">Wordle</div>
+  <div class="main">
+    <div class="try-container" *ngFor="let try of tries">
+      <div
+        class="letter-container"
+        *ngFor="let letter of try.letters"
+        [class.has-text]="
+          letter.text !== '' && letter.state === LetterState.PENDING
+        "
+        [class.partial-match]="letter.state === LetterState.PARTIAL_MATCH"
+        [class.full-match]="letter.state === LetterState.FULL_MATCH"
+        [class.wrong]="letter.state === LetterState.WRONG"
+      >
+        {{ letter.text }}
+      </div>
+    </div>
+  </div>
+  <div class="keyboard-container">
+    <div
+      [class]="['row' + i, 'row'].join(' ')"
+      *ngFor="let row of keyboardRows; let i = index"
+    >
+      <div
+        *ngFor="let key of row"
+        [class]="getKeyClass(key)"
+        [class.enter]="key === 'Enter'"
+        (click)="handleClickKey(key)"
+      >
+        {{ key }}
+      </div>
+    </div>
+  </div>
+</div>
